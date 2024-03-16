@@ -1,10 +1,63 @@
 /* ########################################
 ############# CUSTOM FONTS ################
-######################################## */
+###########################################
+/* Provide variable fonts as main format. */
+@font-face {
+  /* Use VF to make it distinguishable from static fonts. */
+  font-family: 'Overpass VF';
+  src:
+    local('Overpass'),
+    url('/assets/fonts/Overpass/Overpass-VariableFont_wght.woff2')
+      format('woff2-variations'),
+    url('/assets/fonts/Overpass/Overpass-VariableFont_wght.woff')
+      format('woff-variations'),
+    url('/assets/fonts/Overpass/Overpass-VariableFont_wght.ttf')
+      format('truetype-variations');
+  font-style: normal;
+  /* Allowable range for the weight of the variable font. */
+  font-weight: 400 700;
+  /* Displaying text quickly is a top priority, but ensure the custom web-font is used. */
+  font-display: swap;
+}
+
+/* Provide static fonts as a fallback. */
+@font-face {
+  font-family: 'Overpass';
+  src:
+    local('Overpass'),
+    url('/assets/fonts/Overpass/static/Overpass-Regular.woff2') format('woff2'),
+    url('/assets/fonts/Overpass/static/Overpass-Regular.woff') format('woff'),
+    url('/assets/fonts/Overpass/static/Overpass-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Overpass';
+  src:
+    local('Overpass'),
+    url('/assets/fonts/Overpass/static/Overpass-Bold.woff2') format('woff2'),
+    url('/assets/fonts/Overpass/static/Overpass-Bold.woff') format('woff'),
+    url('/assets/fonts/Overpass/static/Overpass-Bold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
 
 /* ########################################
 ############# STYLE GUIDE #################
 ######################################## */
+:root {
+  --color-accent: hsl(25, 97%, 53%);
+  --color-neutral-50: hsl(0, 0%, 100%);
+  --color-neutral-200: hsl(217, 12%, 63%);
+  --color-neutral-400: hsl(216, 12%, 54%);
+  --color-neutral-600: hsl(213, 19%, 18%);
+  --color-neutral-800: hsl(216, 12%, 8%);
+
+  --font-body: 0.9375rem;
+  --font-heading: 2rem;
+}
 
 /* ########################################
 ############# RESET #######################
@@ -48,6 +101,17 @@ ul {
 /* ########################################
 ############# BASIC STYLING ###############
 ######################################## */
+body {
+  background-color: var(--color-neutral-800);
+  color: var(--color-neutral-200);
+  font-size: var(--font-body);
+  /* Use static fonts by default... */
+  font-family: 'Overpass', sans-serif;
+  /*...but prefer loading variable font if supported (feature query). */
+  @supports (font-variation-settings: normal) {
+    font-family: 'Overpass VF', sans-serif;
+  }
+}
 
 /* ########################################
 ########### COMPONENT STYLING #############

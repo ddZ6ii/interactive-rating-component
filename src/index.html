@@ -16,28 +16,151 @@
     <link rel="icon" type="image/svg+xml" href="/assets/favicon-32x32.png" />
     <link rel="stylesheet" href="./style.css" />
     <title>Frontend Mentor | Interactive rating component</title>
+    <!-- Font Awesome Kit -->
+    <script
+      src="https://kit.fontawesome.com/bdb4be7c2a.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
-  <body>
+  <body class="wrapper">
     <main>
-      <h1>Hello World!</h1>
+      <div class="page-container">
+        <section
+          class="page-content page-rating"
+          id="page-rating"
+          aria-labelledby="page-rating-heading"
+        >
+          <header>
+            <div class="thumbnail-container">
+              <img
+                src="/assets/images/icon-star.svg"
+                alt=""
+                width="17"
+                height="16"
+              />
+            </div>
+            <h1 id="page-rating-heading">How did we do?</h1>
+            <p id="description">
+              Please let us know how we did with your support request. All
+              feedback is appreciated to help us improve our offering!
+            </p>
+          </header>
+          <form id="rating-form">
+            <fieldset class="form-group" role="radiogroup" aria-required="true">
+              <legend class="sr-only">Select a rating:</legend>
+              <div class="form-radios">
+                <label for="rating-1" class="form-radio">
+                  <input
+                    type="radio"
+                    name="rating"
+                    value="1"
+                    id="rating-1"
+                    class="sr-only"
+                    aria-describedby="rating-error"
+                    required
+                  />
+                  <span class="label"
+                    >1<span class="sr-only">&nbsp;star</span></span
+                  >
+                </label>
+                <label for="rating-2" class="form-radio">
+                  <input
+                    type="radio"
+                    name="rating"
+                    value="2"
+                    id="rating-2"
+                    class="sr-only"
+                    aria-describedby="rating-error"
+                    required
+                  />
+                  <span class="label"
+                    >2<span class="sr-only">&nbsp;stars</span></span
+                  >
+                </label>
+                <label for="rating-3" class="form-radio">
+                  <input
+                    type="radio"
+                    name="rating"
+                    value="3"
+                    id="rating-3"
+                    class="sr-only"
+                    aria-describedby="rating-error"
+                    required
+                  />
+                  <span class="label"
+                    >3<span class="sr-only">&nbsp;stars</span></span
+                  >
+                </label>
+                <label for="rating-4" class="form-radio">
+                  <input
+                    type="radio"
+                    name="rating"
+                    value="4"
+                    id="rating-4"
+                    class="sr-only"
+                    aria-describedby="rating-error"
+                    required
+                  />
+                  <span class="label"
+                    >4<span class="sr-only">&nbsp;stars</span></span
+                  >
+                </label>
+                <label for="rating-5" class="form-radio">
+                  <input
+                    type="radio"
+                    name="rating"
+                    value="5"
+                    id="rating-5"
+                    class="sr-only"
+                    aria-describedby="rating-error"
+                    required
+                  />
+                  <span class="label"
+                    >5<span class="sr-only">&nbsp;stars</span></span
+                  >
+                </label>
+              </div>
+              <div
+                id="rating-error"
+                class="error-message hidden"
+                role="alert"
+                aria-live="polite"
+              >
+                <p>
+                  <i class="fa-solid fa-circle-exclamation"></i>
+                  <span id="rating-error-message"></span>
+                </p>
+              </div>
+              <button type="submit" class="form-btn">Submit</button>
+            </fieldset>
+          </form>
+        </section>
 
-      <!-- Rating state start -->
-
-      <!-- How did we do? Please let us know how we did with your support request.
-      All feedback is appreciated to help us improve our offering! 1 2 3 4 5
-      Submit -->
-
-      <!-- Rating state end -->
-
-      <!-- Thank you state start -->
-
-      <!-- You selected -->
-      <!-- Add rating here -->
-      <!-- out of 5 Thank you! We appreciate you taking the time to give a rating. If
-      you ever need more support, don’t hesitate to get in touch! -->
-
-      <!-- Thank you state end -->
+        <section
+          class="page-content page-thank-you hidden"
+          id="page-thank-you"
+          aria-labelledby="page-thank-you-heading"
+        >
+          <header>
+            <h1 id="page-thank-you-heading">Thank you!</h1>
+            <p>
+              Thank you! We appreciate you taking the time to give a rating. If
+              you ever need more support, don’t hesitate to get in touch!
+            </p>
+          </header>
+          <img
+            src="/assets/images/illustration-thank-you.svg"
+            alt=""
+            width="162"
+            height="108"
+          />
+          <p class="pill">
+            You selected&nbsp;<span id="selected-rating">x</span>&nbsp;out of 5
+          </p>
+        </section>
+      </div>
     </main>
+
     <footer class="footer">
       <p>
         Challenge by

@@ -48,15 +48,29 @@
 ############# STYLE GUIDE #################
 ######################################## */
 :root {
-  --color-accent: hsl(25, 97%, 53%);
-  --color-neutral-50: hsl(0, 0%, 100%);
-  --color-neutral-200: hsl(217, 12%, 63%);
-  --color-neutral-400: hsl(216, 12%, 54%);
-  --color-neutral-600: hsl(213, 19%, 18%);
-  --color-neutral-800: hsl(216, 12%, 8%);
+  --neutral-50: 0 0% 100%;
+  --neutral-200: 215 10% 68%;
+  --color-accent: #c86e14;
+  --color-neutral-50: #ffffff;
+  --color-neutral-200: #a5acb6;
+  --color-neutral-400: #272e37;
+  --color-neutral-600: #1f2630;
+  --color-neutral-800: #1a1e25;
+  --color-neutral-900: #141419;
+  --color-error: #ff3531;
 
   --font-body: 0.9375rem;
-  --font-heading: 2rem;
+  --font-heading: 1.5rem;
+
+  --gradient-neutral: linear-gradient(
+    to bottom,
+    var(--color-neutral-600),
+    var(--color-neutral-800)
+  );
+
+  --rounded-full: 9999px;
+  --spacing: 2rem;
+  --transition-duration-timing: 150ms ease-out;
 }
 
 /* ########################################
@@ -83,9 +97,15 @@ a {
 }
 
 button {
+  appearance: none;
   background: none;
   border: none;
   cursor: pointer;
+}
+
+fieldset {
+  appearance: none;
+  border: none;
 }
 
 img {
@@ -102,7 +122,7 @@ ul {
 ############# BASIC STYLING ###############
 ######################################## */
 body {
-  background-color: var(--color-neutral-800);
+  background-color: var(--color-neutral-900);
   color: var(--color-neutral-200);
   font-size: var(--font-body);
   /* Use static fonts by default... */
@@ -113,6 +133,219 @@ body {
   }
 }
 
+h1 {
+  color: var(--color-neutral-50);
+  font-size: var(--font-heading);
+  letter-spacing: 1px;
+}
+
 /* ########################################
 ########### COMPONENT STYLING #############
 ######################################## */
+.wrapper {
+  padding-block: var(--spacing);
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  grid-template-rows: 1fr auto;
+}
+
+.page-container {
+  --max-width: 24em;
+  --border-radius: 1rem;
+
+  margin-inline: auto;
+  width: min(90%, var(--max-width));
+  display: flex;
+  overflow: hidden;
+  background: var(--gradient-neutral);
+  border-radius: var(--border-radius);
+
+  @media (min-width: 37.5em) {
+    --max-width: 27em;
+    --border-radius: 2rem;
+  }
+}
+
+.page-content {
+  padding: var(--spacing);
+  flex: 1 0 100%;
+  & h1 {
+    margin-block: calc(0.25 * var(--spacing));
+  }
+}
+
+.page-rating {
+  & header {
+    margin-bottom: var(--spacing);
+  }
+  & .thumbnail-container {
+    --padding: 1em;
+
+    display: inline-block;
+    width: fit-content;
+    padding: var(--padding);
+    aspect-ratio: 1;
+    background-color: var(--color-neutral-400);
+    border-radius: var(--rounded-full);
+
+    @media (min-width: 37.5em) {
+      --padding: 1.25em;
+    }
+  }
+  & .form-group {
+    display: grid;
+    gap: calc(0.75 * var(--spacing));
+  }
+  & .form-radios {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  & .form-radio {
+    --width: 2.8em;
+
+    flex-basis: var(--width);
+    /* width: 100%; */
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+
+    background-color: var(--color-neutral-400);
+    border-radius: var(--rounded-full);
+    cursor: pointer;
+    line-height: 1;
+    transition: var(--transition-duration-timing);
+
+    /* Compensate for the font's vertical offset. */
+    & span.label {
+      margin-top: 4px;
+    }
+    &:is(:hover) {
+      color: var(--color-neutral-50);
+      background-color: var(--color-accent);
+    }
+    &:has(input[type='radio']:is(:focus-visible, :hover)) {
+      background-color: var(--color-accent);
+      outline: 2px solid var(--color-neutral-50);
+      outline-offset: 2px;
+      color: var(--color-neutral-50);
+    }
+    &:has(input[type='radio']:checked) {
+      background-color: var(--color-neutral-200);
+    }
+    &:has(input[type='radio']:checked) {
+      color: var(--color-neutral-50);
+    }
+    @media (min-width: 37.5em) {
+      --width: 3.5em;
+    }
+  }
+  & .error-message {
+    color: var(--color-error);
+  }
+  & .form-btn {
+    padding: 1em;
+    background-color: var(--color-accent);
+    border-radius: var(--rounded-full);
+    color: var(--color-neutral-50);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    line-height: 1;
+
+    &:is(:focus-visible, :hover) {
+      color: var(--color-accent);
+      background-color: var(--color-neutral-50);
+    }
+    &:focus-visible {
+      outline-color: var(--color-accent);
+      outline-offset: 2px;
+    }
+    &[disabled] {
+      cursor: not-allowed;
+      color: hsla(var(--neutral-50) / 0.7);
+      background-color: hsla(var(--neutral-200) / 0.3);
+    }
+  }
+}
+
+.page-thank-you {
+  display: grid;
+  justify-items: center;
+  gap: var(--spacing);
+  text-align: center;
+
+  & header {
+    order: 2;
+    & h1 {
+      margin-top: 0;
+    }
+  }
+  & .pill {
+    padding: 0.5em 1.5em;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    background-color: var(--color-neutral-400);
+    border-radius: var(--rounded-full);
+    color: var(--color-accent);
+  }
+}
+
+.footer {
+  text-align: center;
+  & .footer-icon {
+    color: var(--color-accent);
+  }
+  & .footer-link {
+    transition: var(--transition-duration-timing);
+    &,
+    &:link {
+      color: var(--color-neutral-50);
+      text-underline-offset: 4px;
+    }
+    &:visited {
+      color: var(--color-neutral-200);
+    }
+    &:focus-visible {
+      outline-color: var(--color-accent);
+      outline-offset: 2px;
+      color: var(--color-accent);
+      text-decoration: none;
+    }
+    &:hover {
+      color: var(--color-accent);
+    }
+    &:active {
+      color: var(--color-neutral-50);
+    }
+  }
+}
+
+@media (min-width: 37.5em) {
+  :root {
+    --font-body: 1rem;
+    --font-heading: 1.85rem;
+    --spacing: 2.5rem;
+  }
+}
+
+/* ########################################
+############### UTILITIES #################
+######################################## */
+/* Hide visually but preserve accessibility. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: rect(0 0 0 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.hidden {
+  display: none;
+}

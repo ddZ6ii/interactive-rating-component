@@ -16,15 +16,24 @@
     <link rel="icon" type="image/svg+xml" href="/assets/favicon-32x32.png" />
     <link rel="stylesheet" href="./style.css" />
     <title>Frontend Mentor | Interactive rating component</title>
-    <!-- Font Awesome Kit -->
+    <!-- Use Font Awesome kit for form error message's icon. -->
     <script
+      defer
       src="https://kit.fontawesome.com/bdb4be7c2a.js"
       crossorigin="anonymous"
     ></script>
   </head>
   <body class="wrapper">
+    <noscript class="no-script-container" role="alert" aria-live="assertive">
+      <p class="no-script">
+        🛑 JavaScript is currently disabled in your browser! <br />
+        Please make sure to enable JavaScript to use this site.
+      </p>
+    </noscript>
+
     <main>
-      <div class="page-container">
+      <!-- Use "aria-live" ARIA attribute to ensure the new content is announced by screen readers when page content is dynamically changed. -->
+      <div class="page-container" aria-live="polite">
         <section
           class="page-content page-rating"
           id="page-rating"
@@ -45,18 +54,29 @@
               feedback is appreciated to help us improve our offering!
             </p>
           </header>
-          <form id="rating-form">
-            <fieldset class="form-group" role="radiogroup" aria-required="true">
-              <legend class="sr-only">Select a rating:</legend>
+          <form id="rating-form" aria-label="rating">
+            <!-- Group radios within a fieldset element described by a legend element.Enhance accessibility of HTML fieldset element by providing "role=radiogroup" ARIA role. -->
+            <fieldset
+              role="radiogroup"
+              aria-labelledby="rating"
+              aria-required="true"
+              class="radio-group"
+              disabled
+            >
+              <legend class="sr-only" id="rating">Select a rating:</legend>
               <div class="form-radios">
+                <!-- Implicitely label input control (by placing it inside a label element) to facilitate styling.  -->
                 <label for="rating-1" class="form-radio">
+                  <!-- Use 'aria-invalid="false"' to prevent screen reader from announcing "invalid data" before the user had a chance to actually interact with the form. Use "aria-errormessage" attribute to relate the input control to the error message to be displayed during form validation. -->
+                  <!-- Disable radio group by default in case JavaScript is disabled in the browser. Use JavaScript to remove this attribute on page load. -->
                   <input
                     type="radio"
                     name="rating"
                     value="1"
                     id="rating-1"
                     class="sr-only"
-                    aria-describedby="rating-error"
+                    aria-errormessage="rating-error"
+                    aria-invalid="false"
                     required
                   />
                   <span class="label"
@@ -70,7 +90,8 @@
                     value="2"
                     id="rating-2"
                     class="sr-only"
-                    aria-describedby="rating-error"
+                    aria-errormessage="rating-error"
+                    aria-invalid="false"
                     required
                   />
                   <span class="label"
@@ -84,7 +105,8 @@
                     value="3"
                     id="rating-3"
                     class="sr-only"
-                    aria-describedby="rating-error"
+                    aria-errormessage="rating-error"
+                    aria-invalid="false"
                     required
                   />
                   <span class="label"
@@ -98,7 +120,8 @@
                     value="4"
                     id="rating-4"
                     class="sr-only"
-                    aria-describedby="rating-error"
+                    aria-errormessage="rating-error"
+                    aria-invalid="false"
                     required
                   />
                   <span class="label"
@@ -112,7 +135,8 @@
                     value="5"
                     id="rating-5"
                     class="sr-only"
-                    aria-describedby="rating-error"
+                    aria-errormessage="rating-error"
+                    aria-invalid="false"
                     required
                   />
                   <span class="label"
@@ -120,32 +144,32 @@
                   >
                 </label>
               </div>
-              <div
-                id="rating-error"
-                class="error-message hidden"
-                role="alert"
-                aria-live="polite"
-              >
-                <p>
-                  <i class="fa-solid fa-circle-exclamation"></i>
-                  <span id="rating-error-message"></span>
-                </p>
-              </div>
-              <button type="submit" class="form-btn">Submit</button>
             </fieldset>
+            <!-- Add "role=alert" with "aria-live=assertive" property to ensure the error message is announced immediately in case of invalid form. -->
+            <p
+              id="rating-error"
+              class="error-message hidden"
+              role="alert"
+              aria-live="assertive"
+            >
+              <i class="fa-solid fa-circle-exclamation"></i>
+              <span id="rating-error-message"></span>
+            </p>
+            <!-- Disable submit button by default in case JavaScript is disabled in the browser. Use JavaScript to remove this attribute on page load. -->
+            <button type="submit" class="form-btn" disabled>
+              <span class="loader hidden" aria-hidden="true"></span>
+              <span class="label">Submit</span>
+            </button>
           </form>
         </section>
 
-        <section
-          class="page-content page-thank-you hidden"
-          id="page-thank-you"
-          aria-labelledby="page-thank-you-heading"
-        >
+        <!-- This section will dynamically replace initial content on successfull form submission.-->
+        <section class="page-content page-thank-you hidden" id="page-thank-you">
           <header>
             <h1 id="page-thank-you-heading">Thank you!</h1>
             <p>
-              Thank you! We appreciate you taking the time to give a rating. If
-              you ever need more support, don’t hesitate to get in touch!
+              We appreciate you taking the time to give a rating. If you ever
+              need more support, don’t hesitate to get in touch!
             </p>
           </header>
           <img
@@ -155,7 +179,10 @@
             height="108"
           />
           <p class="pill">
-            You selected&nbsp;<span id="selected-rating">x</span>&nbsp;out of 5
+            You selected&nbsp;<span id="selected-rating">x</span>&nbsp;<span
+              class="sr-only"
+              >stars</span
+            >out of 5
           </p>
         </section>
       </div>

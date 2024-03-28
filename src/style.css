@@ -14,7 +14,6 @@
     url('/assets/fonts/Overpass/Overpass-VariableFont_wght.ttf')
       format('truetype-variations');
   font-style: normal;
-  /* Allowable range for the weight of the variable font. */
   font-weight: 400 700;
   /* Displaying text quickly is a top priority, but ensure the custom web-font is used. */
   font-display: swap;
@@ -50,7 +49,7 @@
 :root {
   --neutral-50: 0 0% 100%;
   --neutral-200: 215 10% 68%;
-  --color-accent: #c86e14;
+  --color-accent: #ab5d11;
   --color-neutral-50: #ffffff;
   --color-neutral-200: #a5acb6;
   --color-neutral-400: #272e37;
@@ -177,7 +176,7 @@ h1 {
 
 .page-rating {
   & header {
-    margin-bottom: var(--spacing);
+    margin-bottom: calc(0.75 * var(--spacing));
   }
   &.fading-out {
     @media (prefers-reduced-motion: no-preference) {
@@ -198,9 +197,18 @@ h1 {
       --padding: 1.25em;
     }
   }
-  & .form-group {
-    display: grid;
-    gap: calc(0.75 * var(--spacing));
+  & .radio-group {
+    &:disabled {
+      & .form-radio {
+        cursor: not-allowed !important;
+      }
+      & .form-radio:hover,
+      .form-radio:has(input[type='radio']:is(:focus-visible, :hover)) {
+        outline: none;
+        background-color: var(--color-neutral-400);
+        color: var(--color-neutral-200);
+      }
+    }
   }
   & .form-radios {
     display: flex;
@@ -226,6 +234,7 @@ h1 {
     & span.label {
       margin-top: 4px;
     }
+    /* &:is(:hover) { */
     &:is(:hover) {
       color: var(--color-neutral-50);
       background-color: var(--color-accent);
@@ -247,10 +256,17 @@ h1 {
     }
   }
   & .error-message {
+    margin-top: calc(0.5 * var(--spacing));
     color: var(--color-error);
   }
   & .form-btn {
+    margin-top: calc(0.75 * var(--spacing));
     padding: 1em;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: calc(0.25 * var(--spacing));
     background-color: var(--color-accent);
     border-radius: var(--rounded-full);
     color: var(--color-neutral-50);
@@ -329,6 +345,19 @@ h1 {
   }
 }
 
+.no-script-container {
+  order: 1;
+}
+
+.no-script {
+  margin-top: var(--spacing);
+  padding: var(--spacing);
+  background: var(--gradient-neutral);
+  border-radius: 8px;
+  outline: 1px solid var(--color-error-dark);
+  color: var(--color-error);
+}
+
 @media (min-width: 37.5em) {
   :root {
     --font-body: 1rem;
@@ -348,9 +377,20 @@ h1 {
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip-path: rect(0 0 0 0);
+  /*  Defines a rectangle at the specified inset distances from each side of the reference box. */
+  clip-path: inset(50%);
   white-space: nowrap;
   border-width: 0;
+}
+
+.loader {
+  width: 1em;
+  aspect-ratio: 1;
+  display: inline-block;
+  border-radius: var(--rounded-full);
+  border: 2px solid var(--color-neutral-50);
+  border-bottom-color: transparent;
+  animation: rotation 1s linear infinite;
 }
 
 .hidden {
@@ -375,5 +415,14 @@ h1 {
   to {
     opacity: 1;
     translate: 0;
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
